@@ -1,0 +1,995 @@
+/* Leaflet CSS - must be imported before Tailwind */
+@import 'leaflet/dist/leaflet.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* EVA Theme Fonts - Requirements: 2.1, 2.2, 2.3, 2.4 */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+/* Terminal Theme CSS - Requirements: 10.1, 10.2, 10.3, 10.4 */
+@import './styles/terminal-theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 
+   * Color Contrast Compliance (WCAG AA - 4.5:1 minimum)
+   * Requirements: 10.4 - Minimum color contrast ratio of 4.5:1 for all text
+   */
+  
+  /* shadcn/ui CSS Variables - Light mode (default) */
+  :root {
+    --background: 210 40% 98%; /* Slightly off-white for depth */
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    /* Premium Blue: #2563EB (HSL: 221.2 83.2% 53.3%) */
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    
+    /* Border Radius Values */
+    --radius: 0.75rem; /* More rounded for modern look */
+    --radius-card: 0.75rem;
+    --radius-button: 0.5rem;
+    --radius-input: 0.5rem;
+    
+    /* Semantic Status Colors */
+    --status-success: 142.1 76.2% 36.3%;
+    --status-success-foreground: 0 0% 100%;
+    --status-warning: 37.7 92.1% 50.2%;
+    --status-warning-foreground: 0 0% 0%;
+    --status-error: 0 84.2% 60.2%;
+    --status-error-foreground: 0 0% 100%;
+  }
+
+  /* shadcn/ui CSS Variables - Dark mode */
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    /* Premium Blue Dark Mode */
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    
+    /* Border Radius Values - same as light mode */
+    --radius: 0.75rem;
+    --radius-card: 0.75rem;
+    --radius-button: 0.5rem;
+    --radius-input: 0.5rem;
+    
+    /* Semantic Status Colors - Dark mode variants */
+    --status-success: 142.1 70.6% 45.3%;
+    --status-success-foreground: 0 0% 100%;
+    --status-warning: 37.7 92.1% 50.2%;
+    --status-warning-foreground: 0 0% 0%;
+    --status-error: 0 72.2% 50.6%;
+    --status-error-foreground: 0 0% 100%;
+  }
+
+  /* 
+   * EVA Theme Variables
+   * Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 2.1, 2.2, 2.3, 2.4
+   * 
+   * EVA (Neon Genesis Evangelion) NERV-inspired color palette and typography
+   */
+  :root {
+    /* EVA Background Colors */
+    --eva-bg-primary: #0a0a0a;      /* Deep black - main background */
+    --eva-bg-secondary: #111111;    /* Slightly lighter - secondary surfaces */
+    --eva-bg-tertiary: #1a1a1a;     /* Panel backgrounds */
+    
+    /* EVA Accent Colors */
+    --eva-accent-orange: #FF6600;   /* Primary EVA orange - highlights, borders */
+    --eva-accent-red: #DC143C;      /* Warning/danger - critical indicators */
+    --eva-accent-purple: #9400D3;   /* Secondary accent - status indicators */
+    --eva-accent-green: #00FF41;    /* Terminal green - data highlights */
+    --eva-accent-cyan: #00D4FF;     /* Data highlights - secondary info */
+    
+    /* EVA Text Colors */
+    --eva-text-primary: #FFFFFF;    /* Main text - high contrast */
+    --eva-text-secondary: #B0B0B0;  /* Muted text - secondary info */
+    --eva-text-accent: #FF6600;     /* Highlighted text - important info */
+    
+    /* EVA Border Colors */
+    --eva-border-default: #333333;  /* Standard borders */
+    --eva-border-accent: #FF6600;   /* Accent borders - highlighted elements */
+    --eva-border-glow: rgba(255, 102, 0, 0.5); /* Glow effect - hover states */
+    
+    /* EVA Typography */
+    --eva-font-mono: 'Share Tech Mono', 'Courier New', monospace;
+    --eva-font-display: 'Orbitron', 'Share Tech Mono', monospace;
+    
+    /* EVA Letter Spacing */
+    --eva-letter-spacing-tight: 0.05em;
+    --eva-letter-spacing-normal: 0.1em;
+    --eva-letter-spacing-wide: 0.2em;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  /* Ensure no white edges visible with CRT barrel distortion effect */
+  html {
+    background-color: var(--eva-bg-primary, #0a0a0a);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    /* EVA Typography - Requirements: 2.1 */
+    font-family: var(--eva-font-mono);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Tabular numerals for aligned data display - Requirements: 2.3 */
+    font-variant-numeric: tabular-nums;
+    /* Ensure black background for CRT effect edges */
+    background-color: var(--eva-bg-primary, #0a0a0a);
+  }
+
+  #root {
+    /* Ensure black background behind CRT effect container */
+    background-color: var(--eva-bg-primary, #0a0a0a);
+    min-height: 100vh;
+  }
+
+  /* EVA Heading Styles - Requirements: 2.2 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--eva-font-display);
+    text-transform: uppercase;
+    letter-spacing: var(--eva-letter-spacing-normal);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 2rem;
+    letter-spacing: var(--eva-letter-spacing-wide);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    letter-spacing: var(--eva-letter-spacing-normal);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    letter-spacing: var(--eva-letter-spacing-normal);
+  }
+
+  h4, h5, h6 {
+    font-size: 1rem;
+    letter-spacing: var(--eva-letter-spacing-tight);
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Map container styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Toast notification animation */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+/* Global focus indicator styles for accessibility */
+@layer utilities {
+  /* Ensure all focusable elements have visible focus indicators */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Remove default outline for elements with custom focus styles */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* High contrast focus indicator for better visibility */
+  .focus-visible-ring:focus-visible {
+    @apply ring-2 ring-ring ring-offset-2;
+  }
+
+  /* Screen reader only content - visually hidden but accessible to screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* 
+ * EVA Text Utility Classes
+ * Requirements: 2.2, 2.3, 2.4
+ * 
+ * Specialized text styling classes for EVA theme
+ */
+@layer utilities {
+  /* EVA Heading - uppercase with wide letter-spacing */
+  .eva-heading {
+    font-family: var(--eva-font-display);
+    text-transform: uppercase;
+    letter-spacing: var(--eva-letter-spacing-wide);
+    font-weight: 600;
+  }
+
+  /* EVA Label - smaller text with increased letter-spacing for technical readout appearance */
+  .eva-label {
+    font-family: var(--eva-font-mono);
+    font-size: 0.75rem;
+    letter-spacing: var(--eva-letter-spacing-normal);
+    text-transform: uppercase;
+    color: var(--eva-text-secondary);
+  }
+
+  /* EVA Data - tabular numerals with monospace for aligned data display */
+  .eva-data {
+    font-family: var(--eva-font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--eva-letter-spacing-tight);
+  }
+}
+
+/* 
+ * Touch Target Compliance
+ * Requirements: 8.4
+ * 
+ * All interactive elements have minimum 44x44px touch target on mobile
+ * Uses responsive classes to maintain visual design on desktop
+ */
+@layer utilities {
+  /* Mobile-first touch target - 44px minimum */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Touch target that resets on desktop */
+  .touch-target-mobile {
+    @apply min-h-[44px] md:min-h-0;
+  }
+  
+  /* Touch target for icon buttons */
+  .touch-target-icon {
+    @apply min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0;
+  }
+}
+
+/* 
+ * Smooth Transitions for Interactive Elements
+ * Requirements: 6.4, 9.3
+ * 
+ * Uses 200-300ms transitions for state changes
+ * CSS transforms and opacity for GPU acceleration
+ */
+@layer components {
+  /* Base transition for interactive elements */
+  .interactive-transition {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  /* GPU-accelerated transitions using transform and opacity */
+  .gpu-transition {
+    @apply transition-[transform,opacity] duration-200 ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  /* Hover scale effect for buttons and clickable elements */
+  .hover-scale {
+    @apply transition-transform duration-200 ease-in-out;
+  }
+  .hover-scale:hover {
+    @apply scale-[1.02];
+  }
+  .hover-scale:active {
+    @apply scale-[0.98];
+  }
+
+  /* Smooth background color transitions */
+  .bg-transition {
+    @apply transition-colors duration-200 ease-in-out;
+  }
+
+  /* Smooth border transitions */
+  .border-transition {
+    @apply transition-[border-color,box-shadow] duration-200 ease-in-out;
+  }
+
+  /* Smooth opacity transitions */
+  .opacity-transition {
+    @apply transition-opacity duration-200 ease-in-out;
+  }
+
+  /* Combined transform transitions for animations */
+  .transform-transition {
+    @apply transition-transform duration-300 ease-in-out;
+    will-change: transform;
+  }
+}
+
+/*
+ * Smooth Layout Transitions on Resize
+ * Requirements: 8.5
+ * 
+ * Ensures smooth transitions when viewport is resized between
+ * mobile and desktop breakpoints
+ */
+@layer utilities {
+  /* Smooth width transitions for layout containers */
+  .layout-transition {
+    @apply transition-[width,max-width,min-width,padding,margin] duration-300 ease-in-out;
+  }
+  
+  /* Smooth flex transitions for responsive layouts */
+  .flex-transition {
+    @apply transition-[flex,flex-basis,flex-grow,flex-shrink] duration-300 ease-in-out;
+  }
+  
+  /* Smooth grid transitions */
+  .grid-transition {
+    @apply transition-[grid-template-columns,grid-template-rows,gap] duration-300 ease-in-out;
+  }
+  
+  /* Smooth height transitions for collapsible elements */
+  .height-transition {
+    @apply transition-[height,max-height,min-height] duration-300 ease-in-out;
+  }
+  
+  /* Combined layout transition for main containers */
+  .responsive-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+
+/*
+ * Vessel Detail Popup Styles
+ * Custom styles for the vessel information popup on the map
+ */
+.leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
+
+.leaflet-popup-close-button {
+  display: none;
+}
+
+/* Vessel detail popup card */
+.vessel-detail-popup {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Dark mode support for popup */
+.dark .leaflet-popup-content-wrapper {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+}
+
+/* Smooth popup animations */
+.leaflet-popup {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.leaflet-fade-anim .leaflet-popup {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Track annotation styles */
+.track-annotation {
+  background: transparent !important;
+  border: none !important;
+}
+
+/*
+ * EVA Map Frame Styling
+ * Requirements: 6.2, 9.3
+ * 
+ * Adds corner bracket overlays and subtle border glow to map container
+ */
+.eva-map-frame {
+  position: relative;
+  border: 1px solid var(--terminal-accent);
+  box-shadow: 0 0 20px var(--terminal-glow), inset 0 0 20px color-mix(in srgb, var(--terminal-accent) 10%, transparent);
+}
+
+/* Corner brackets for EVA frame */
+.eva-map-frame::before,
+.eva-map-frame::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--terminal-accent);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Top-left corner bracket */
+.eva-map-frame::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+/* Bottom-right corner bracket */
+.eva-map-frame::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Additional corner brackets using pseudo-elements on child */
+.eva-map-frame > .leaflet-container::before,
+.eva-map-frame > .leaflet-container::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--terminal-accent);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Top-right corner bracket */
+.eva-map-frame > .leaflet-container::before {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* Bottom-left corner bracket */
+.eva-map-frame > .leaflet-container::after {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+}
+
+/*
+ * EVA Map Controls Styling
+ * Requirements: 9.2
+ * 
+ * Styles zoom and layer controls with angular dark buttons and EVA theme
+ */
+
+/* Zoom control container */
+.leaflet-control-zoom {
+  border: 1px solid var(--terminal-accent) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 10px var(--terminal-glow) !important;
+  overflow: hidden;
+  clip-path: polygon(
+    0 8px,
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%
+  );
+}
+
+/* Zoom control buttons */
+.leaflet-control-zoom a {
+  background-color: var(--eva-bg-secondary) !important;
+  color: var(--terminal-accent) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--eva-border-default) !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-family: var(--eva-font-display) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.leaflet-control-zoom a:last-child {
+  border-bottom: none !important;
+}
+
+/* Zoom control hover effect */
+.leaflet-control-zoom a:hover {
+  background-color: var(--eva-bg-tertiary) !important;
+  color: var(--eva-text-primary) !important;
+  box-shadow: inset 0 0 10px var(--terminal-glow) !important;
+}
+
+/* Zoom control active/pressed state */
+.leaflet-control-zoom a:active {
+  background-color: var(--terminal-accent) !important;
+  color: var(--eva-bg-primary) !important;
+}
+
+/* Layer control styling */
+.leaflet-control-layers {
+  background-color: var(--eva-bg-secondary) !important;
+  border: 1px solid var(--terminal-accent) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 10px var(--terminal-glow) !important;
+  clip-path: polygon(
+    0 8px,
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%
+  );
+}
+
+.leaflet-control-layers-toggle {
+  background-color: var(--eva-bg-secondary) !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.leaflet-control-layers-expanded {
+  padding: 12px !important;
+  color: var(--eva-text-primary) !important;
+  font-family: var(--eva-font-mono) !important;
+  font-size: 12px !important;
+}
+
+.leaflet-control-layers-base label,
+.leaflet-control-layers-overlays label {
+  color: var(--eva-text-primary) !important;
+  font-family: var(--eva-font-mono) !important;
+  letter-spacing: var(--eva-letter-spacing-tight) !important;
+}
+
+/* Attribution control styling */
+.leaflet-control-attribution {
+  background-color: rgba(10, 10, 10, 0.8) !important;
+  color: var(--eva-text-secondary) !important;
+  font-family: var(--eva-font-mono) !important;
+  font-size: 10px !important;
+  border-top: 1px solid var(--eva-border-default) !important;
+  padding: 4px 8px !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--terminal-accent) !important;
+  text-decoration: none !important;
+}
+
+.leaflet-control-attribution a:hover {
+  color: var(--eva-text-primary) !important;
+  text-decoration: underline !important;
+}
+
+/*
+ * EVA Map Initialization Animation
+ * Requirements: 9.4
+ * 
+ * Brief scan/load animation on map ready
+ */
+
+@keyframes eva-map-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes eva-map-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Map initialization overlay */
+.eva-map-init-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--eva-bg-primary);
+  z-index: 2000;
+  pointer-events: none;
+  animation: eva-map-fade-in 0.3s ease-out forwards;
+}
+
+/* Scanning line effect */
+.eva-map-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--terminal-accent),
+    transparent
+  );
+  box-shadow: 0 0 20px var(--terminal-accent);
+  animation: eva-map-scan 1.5s ease-in-out;
+  z-index: 2001;
+}
+
+/* Grid overlay during initialization */
+.eva-map-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(var(--eva-border-default) 1px, transparent 1px),
+    linear-gradient(90deg, var(--eva-border-default) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  z-index: 2001;
+  animation: eva-map-fade-in 0.5s ease-out reverse forwards;
+  animation-delay: 1s;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .eva-map-scan-line {
+    animation: none;
+    display: none;
+  }
+  
+  .eva-map-grid {
+    animation: none;
+    display: none;
+  }
+  
+  .eva-map-init-overlay {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/*
+ * EVA Vessel Marker Base Styles
+ * 
+ * Ensures markers don't shift position during map panning
+ * IMPORTANT: Do NOT override margin - Leaflet uses it for iconAnchor positioning
+ */
+.directional-vessel-marker {
+  /* Prevent position shifts during map movement with GPU acceleration */
+  backface-visibility: hidden;
+  /* Ensure smooth sub-pixel rendering */
+  -webkit-font-smoothing: subpixel-antialiased;
+  /* Remove default padding that might interfere */
+  padding: 0 !important;
+}
+
+/*
+ * EVA Vessel Marker Selection Animations
+ * Requirements: 7.2
+ * 
+ * Animated targeting brackets and pulsing ring effect for selected vessels
+ */
+
+@keyframes eva-target-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1.2);
+    opacity: 0.4;
+  }
+}
+
+@keyframes eva-bracket-scan {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Pulsing ring effect for selected markers */
+.eva-marker-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translate3d(0, 0, 0);
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--terminal-accent);
+  border-radius: 50%;
+  animation: eva-target-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+/* Targeting brackets for selected markers */
+.eva-marker-brackets {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translate3d(0, 0, 0);
+  width: 120%;
+  height: 120%;
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+
+.eva-marker-bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--terminal-accent);
+  animation: eva-bracket-scan 1.5s ease-in-out infinite;
+}
+
+.eva-marker-bracket.top-left {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.eva-marker-bracket.top-right {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+.eva-marker-bracket.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+}
+
+.eva-marker-bracket.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Respect reduced motion preference for marker animations */
+@media (prefers-reduced-motion: reduce) {
+  .eva-marker-pulse-ring,
+  .eva-marker-bracket {
+    animation: none;
+  }
+  
+  .eva-marker-pulse-ring {
+    opacity: 0.6;
+  }
+}
+
+/*
+ * EVA Vessel Track Line Styling
+ * Requirements: 7.3
+ * 
+ * Dashed pattern with glow effect for vessel tracks
+ */
+
+/* Override Leaflet polyline styles for EVA theme */
+.leaflet-pane .leaflet-overlay-pane svg path.eva-vessel-track {
+  stroke: var(--terminal-accent);
+  stroke-width: 3;
+  stroke-dasharray: 10, 5;
+  stroke-linecap: round;
+  fill: none;
+  filter: drop-shadow(0 0 4px var(--terminal-accent)) drop-shadow(0 0 2px var(--terminal-accent));
+  opacity: 0.8;
+}
+
+/* Track start marker (oldest position) */
+.eva-track-start-marker {
+  background: var(--eva-bg-secondary);
+  border: 2px solid var(--terminal-dim);
+  color: var(--terminal-dim);
+  font-family: var(--eva-font-mono);
+  font-size: 10px;
+  padding: 2px 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+  box-shadow: 0 0 6px var(--terminal-dim);
+  white-space: nowrap;
+}
+
+/* Track end marker (current position) */
+.eva-track-end-marker {
+  background: var(--eva-bg-secondary);
+  border: 2px solid var(--terminal-accent);
+  color: var(--terminal-accent);
+  font-family: var(--eva-font-mono);
+  font-size: 10px;
+  padding: 2px 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+  box-shadow: 0 0 6px var(--terminal-accent);
+  white-space: nowrap;
+}
+
+/* Track annotation markers */
+.eva-track-annotation {
+  background: var(--eva-bg-secondary);
+  border: 1px solid var(--terminal-dim);
+  color: var(--eva-text-secondary);
+  font-family: var(--eva-font-mono);
+  font-size: 9px;
+  padding: 2px 4px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+  box-shadow: 0 0 4px rgba(255, 102, 0, 0.3);
+  white-space: nowrap;
+}
+
+/*
+ * EVA Terminal-Style Map Visualization Tooltips
+ * Requirements: 9.3
+ * 
+ * Override Leaflet tooltip styles for collision analysis and projected paths
+ */
+
+/* Base tooltip styling - terminal aesthetic */
+.leaflet-tooltip {
+  background: var(--eva-bg-secondary, #0a0a0a);
+  border: 1px solid var(--terminal-accent, #FF6600);
+  color: var(--eva-text-primary, #e0e0e0);
+  font-family: var(--eva-font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.4), inset 0 0 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 2px rgba(255, 102, 0, 0.3);
+  white-space: nowrap;
+}
+
+/* Remove default tooltip arrow */
+.leaflet-tooltip::before {
+  display: none;
+}
+
+/* Visualization marker tooltip - collision paths */
+.visualization-marker + .leaflet-tooltip,
+.eva-viz-marker + .leaflet-tooltip {
+  background: var(--eva-bg-secondary, #0a0a0a);
+  border: 1px solid var(--terminal-warning, #ef4444);
+  color: var(--terminal-warning, #ef4444);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+  text-shadow: 0 0 2px rgba(239, 68, 68, 0.3);
+}
+
+/* CPA warning tooltip - high priority styling */
+.leaflet-tooltip[style*="CPA:"] {
+  border-color: var(--terminal-warning, #ef4444);
+  color: var(--terminal-warning, #ef4444);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  animation: eva-cpa-pulse 2s ease-in-out infinite;
+}
+
+@keyframes eva-cpa-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.7);
+  }
+}
+
+/* Projected path label styling */
+.leaflet-tooltip[style*="projected path"] {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+/* EVA visualization tooltip - specific class */
+.eva-viz-tooltip {
+  background: var(--eva-bg-secondary, #0a0a0a) !important;
+  border: 1px solid var(--terminal-accent, #FF6600) !important;
+  color: var(--eva-text-primary, #e0e0e0) !important;
+  font-family: var(--eva-font-mono, 'JetBrains Mono', 'Fira Code', monospace) !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.4), inset 0 0 4px rgba(0, 0, 0, 0.5) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.eva-viz-tooltip::before {
+  display: none !important;
+}
+
+/* CPA warning tooltip - high priority red styling */
+.eva-cpa-tooltip {
+  background: var(--eva-bg-secondary, #0a0a0a) !important;
+  border: 2px solid var(--terminal-warning, #ef4444) !important;
+  color: var(--terminal-warning, #ef4444) !important;
+  font-family: var(--eva-font-mono, 'JetBrains Mono', 'Fira Code', monospace) !important;
+  font-size: 11px !important;
+  font-weight: bold !important;
+  padding: 4px 8px !important;
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.6), inset 0 0 4px rgba(0, 0, 0, 0.5) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: eva-cpa-pulse 2s ease-in-out infinite;
+}
+
+.eva-cpa-tooltip::before {
+  display: none !important;
+}
+
+/* Projected path line styling */
+.eva-projected-path {
+  filter: drop-shadow(0 0 4px currentColor);
+}

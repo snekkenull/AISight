@@ -1,0 +1,761 @@
+/**
+ * Terminal Theme CSS Variables and Scheme Classes
+ * 
+ * Requirements: 10.1, 10.2, 10.3, 10.4
+ * Defines CSS variables for terminal colors and scheme-specific selectors
+ */
+
+/* Base terminal CSS variables - defaults to EVA Orange */
+:root {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #ff6600;
+  --terminal-accent: #ff6600;
+  --terminal-dim: #803300;
+  --terminal-error: #dc143c;
+  --terminal-success: #00ff41;
+  --terminal-glow: #ff6600;
+}
+
+/* Classic Green Terminal Scheme */
+.terminal-scheme-green {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #00ff41;
+  --terminal-accent: #00ff41;
+  --terminal-dim: #006b1a;
+  --terminal-error: #ff0000;
+  --terminal-success: #00ff41;
+  --terminal-glow: #00ff41;
+}
+
+/* Amber Terminal Scheme */
+.terminal-scheme-amber {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #ffb000;
+  --terminal-accent: #ffb000;
+  --terminal-dim: #805800;
+  --terminal-error: #ff0000;
+  --terminal-success: #00ff41;
+  --terminal-glow: #ffb000;
+}
+
+/* White Terminal Scheme */
+.terminal-scheme-white {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #ffffff;
+  --terminal-accent: #ffffff;
+  --terminal-dim: #808080;
+  --terminal-error: #ff0000;
+  --terminal-success: #00ff41;
+  --terminal-glow: #ffffff;
+}
+
+/* Blue Terminal Scheme */
+.terminal-scheme-blue {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #00d4ff;
+  --terminal-accent: #00d4ff;
+  --terminal-dim: #006b80;
+  --terminal-error: #ff0000;
+  --terminal-success: #00ff41;
+  --terminal-glow: #00d4ff;
+}
+
+/* EVA Orange Terminal Scheme */
+.terminal-scheme-eva-orange {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #ff6600;
+  --terminal-accent: #ff6600;
+  --terminal-dim: #803300;
+  --terminal-error: #dc143c;
+  --terminal-success: #00ff41;
+  --terminal-glow: #ff6600;
+}
+
+/* EVA Red Terminal Scheme */
+.terminal-scheme-eva-red {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #dc143c;
+  --terminal-accent: #dc143c;
+  --terminal-dim: #8b1a2e;  /* Adjusted for WCAG AA 2:1+ contrast */
+  --terminal-error: #ff0000;
+  --terminal-success: #00ff41;
+  --terminal-glow: #dc143c;
+}
+
+/* EVA Purple Terminal Scheme */
+.terminal-scheme-eva-purple {
+  --terminal-bg: #0a0a0a;
+  --terminal-fg: #9400d3;
+  --terminal-accent: #9400d3;
+  --terminal-dim: #7000a8;  /* Adjusted for WCAG AA 2:1+ contrast */
+  --terminal-error: #dc143c;
+  --terminal-success: #00ff41;
+  --terminal-glow: #9400d3;
+}
+
+/* Terminal base styles */
+.terminal-base {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-fg);
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+/* Terminal text utilities */
+.terminal-text {
+  color: var(--terminal-fg);
+}
+
+.terminal-text-dim {
+  color: var(--terminal-dim);
+}
+
+.terminal-text-accent {
+  color: var(--terminal-accent);
+}
+
+.terminal-text-error {
+  color: var(--terminal-error);
+}
+
+.terminal-text-success {
+  color: var(--terminal-success);
+}
+
+/* Terminal border utilities */
+.terminal-border {
+  border-color: var(--terminal-accent);
+}
+
+.terminal-border-dim {
+  border-color: var(--terminal-dim);
+}
+
+/* Terminal glow effects */
+.terminal-glow {
+  text-shadow: 0 0 5px var(--terminal-glow),
+               0 0 10px var(--terminal-glow),
+               0 0 15px var(--terminal-glow);
+}
+
+.terminal-glow-subtle {
+  text-shadow: 0 0 3px var(--terminal-glow),
+               0 0 6px var(--terminal-glow);
+}
+
+.terminal-box-glow {
+  box-shadow: 0 0 5px var(--terminal-glow),
+              0 0 10px var(--terminal-glow),
+              inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-box-glow-subtle {
+  box-shadow: 0 0 3px var(--terminal-glow),
+              0 0 6px var(--terminal-glow);
+}
+
+/* Terminal background utilities */
+.terminal-bg {
+  background-color: var(--terminal-bg);
+}
+
+.terminal-bg-accent {
+  background-color: var(--terminal-accent);
+}
+
+/**
+ * Terminal Scrollbar Styling
+ * 
+ * Requirements: 11.1, 11.2, 11.3, 11.4, 11.5
+ * - Terminal-styled scrollbar
+ * - Thin track styling with minimal visual weight
+ * - Solid color matching terminal scheme for thumb
+ * - No rounded corners or gradient styling
+ * - Hover highlight feedback
+ */
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track {
+  background: var(--terminal-bg);
+  border: 1px solid var(--terminal-dim);
+  border-radius: 0; /* No rounded corners - Requirement 11.4 */
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--terminal-dim); /* Solid color - Requirement 11.3 */
+  border: none;
+  border-radius: 0; /* No rounded corners - Requirement 11.4 */
+}
+
+/* Hover highlight feedback - Requirement 11.5 */
+.terminal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-accent);
+  box-shadow: 0 0 4px var(--terminal-glow);
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb:active {
+  background: var(--terminal-fg);
+}
+
+.terminal-scrollbar::-webkit-scrollbar-corner {
+  background: var(--terminal-bg);
+}
+
+/* Firefox scrollbar - Requirement 11.2 (thin track) */
+.terminal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--terminal-dim) var(--terminal-bg);
+}
+
+/* Thin scrollbar variant for compact areas */
+.terminal-scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.terminal-scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+}
+
+.terminal-scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--terminal-dim);
+  border-radius: 0;
+}
+
+.terminal-scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-accent);
+}
+
+/* Auto-hide scrollbar variant */
+.terminal-scrollbar-auto {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.terminal-scrollbar-auto:hover {
+  scrollbar-color: var(--terminal-dim) var(--terminal-bg);
+}
+
+.terminal-scrollbar-auto::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.terminal-scrollbar-auto:hover::-webkit-scrollbar-thumb {
+  background: var(--terminal-dim);
+}
+
+.terminal-scrollbar-auto:hover::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-accent);
+}
+
+/* Terminal monospace text */
+.terminal-mono {
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* Terminal uppercase labels */
+.terminal-label {
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  color: var(--terminal-dim);
+}
+
+/* Terminal data display */
+.terminal-data {
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  color: var(--terminal-fg);
+}
+
+
+/**
+ * Terminal Layout Responsive Styles
+ * 
+ * Requirements: 2.7
+ * - Proportional sizing on viewport resize
+ * - All zones remain visible at supported viewport sizes
+ */
+
+/* Terminal Layout Base */
+.terminal-layout {
+  /* Ensure smooth transitions on resize */
+  transition: grid-template-columns 0.2s ease, grid-template-rows 0.2s ease;
+}
+
+/* Ensure all layout zones have minimum sizes */
+.terminal-layout-status {
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.terminal-layout-left,
+.terminal-layout-right {
+  min-width: 0; /* Allow shrinking in grid */
+  max-width: 100%;
+}
+
+.terminal-layout-main {
+  min-width: 0; /* Allow shrinking in grid */
+  min-height: 0; /* Allow shrinking in grid */
+}
+
+.terminal-layout-dialog {
+  min-height: 150px;
+  max-height: 50vh;
+}
+
+/* When AI dialog is on the right, let it fill the full height */
+.terminal-layout[data-ai-position="right"] .terminal-layout-dialog {
+  max-height: none;
+}
+
+/* Responsive adjustments for medium screens */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .terminal-layout-left,
+  .terminal-layout-right {
+    font-size: 0.875rem;
+  }
+}
+
+/* Responsive adjustments for large screens */
+@media (min-width: 1280px) {
+  .terminal-layout-left,
+  .terminal-layout-right {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Ensure proper overflow handling */
+.terminal-layout-left,
+.terminal-layout-right,
+.terminal-layout-dialog {
+  overflow: auto;
+}
+
+/* Status bar responsive adjustments */
+@media (max-width: 1023px) {
+  .status-bar-nav {
+    flex-wrap: wrap;
+    gap: 0.125rem;
+  }
+  
+  .status-bar-title {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .status-bar {
+    padding: 0 0.5rem;
+  }
+  
+  .status-bar-status {
+    gap: 0.5rem;
+  }
+  
+  .status-indicator {
+    font-size: 0.65rem;
+  }
+}
+
+
+/**
+ * Pixel Icon Styling
+ * 
+ * Requirements: 12.1, 12.2, 12.3, 12.4, 12.5
+ * - Pixel-art style iconography
+ * - image-rendering: pixelated to prevent smoothing
+ * - Consistent pixel grid size
+ * - Terminal color scheme integration
+ * - Crisp pixel edges without anti-aliasing
+ */
+
+/* Base pixel icon styles */
+.pixel-icon {
+  /* Requirement 12.2, 12.5: Prevent smoothing, maintain crisp edges */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  
+  /* Requirement 12.4: Use terminal foreground color by default */
+  color: var(--terminal-fg);
+  fill: currentColor;
+  
+  /* Ensure no anti-aliasing */
+  shape-rendering: crispEdges;
+  
+  /* Prevent any blur from transforms */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  
+  /* Display inline with text */
+  display: inline-block;
+  vertical-align: middle;
+  
+  /* Prevent selection */
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Pixel icon color variants using terminal theme */
+.pixel-icon-accent {
+  color: var(--terminal-accent);
+}
+
+.pixel-icon-dim {
+  color: var(--terminal-dim);
+}
+
+.pixel-icon-error {
+  color: var(--terminal-error);
+}
+
+.pixel-icon-success {
+  color: var(--terminal-success);
+}
+
+/* Pixel icon with glow effect */
+.pixel-icon-glow {
+  filter: drop-shadow(0 0 2px var(--terminal-glow));
+}
+
+.pixel-icon-glow-strong {
+  filter: drop-shadow(0 0 3px var(--terminal-glow)) 
+          drop-shadow(0 0 6px var(--terminal-glow));
+}
+
+/* Interactive pixel icons (when inside buttons or clickable elements) */
+button .pixel-icon,
+a .pixel-icon,
+.clickable .pixel-icon {
+  pointer-events: auto;
+  transition: filter 0.15s ease;
+}
+
+button:hover .pixel-icon,
+a:hover .pixel-icon,
+.clickable:hover .pixel-icon {
+  filter: drop-shadow(0 0 4px var(--terminal-glow));
+}
+
+button:active .pixel-icon,
+a:active .pixel-icon,
+.clickable:active .pixel-icon {
+  filter: drop-shadow(0 0 2px var(--terminal-glow)) brightness(1.2);
+}
+
+/* Disabled state */
+button:disabled .pixel-icon,
+.disabled .pixel-icon {
+  color: var(--terminal-dim);
+  opacity: 0.5;
+  filter: none;
+}
+
+/* Reduced motion: disable glow transitions */
+@media (prefers-reduced-motion: reduce) {
+  button .pixel-icon,
+  a .pixel-icon,
+  .clickable .pixel-icon {
+    transition: none;
+  }
+  
+  button:hover .pixel-icon,
+  a:hover .pixel-icon,
+  .clickable:hover .pixel-icon {
+    filter: none;
+  }
+}
+
+/* Size variants */
+.pixel-icon-sm {
+  width: 12px;
+  height: 12px;
+}
+
+.pixel-icon-md {
+  width: 16px;
+  height: 16px;
+}
+
+.pixel-icon-lg {
+  width: 24px;
+  height: 24px;
+}
+
+.pixel-icon-xl {
+  width: 32px;
+  height: 32px;
+}
+
+
+/**
+ * Interactive Animation Effects
+ * 
+ * Requirements: 15.1, 15.2, 15.3, 15.7
+ * - Hover glow animations for interactive elements
+ * - Button press feedback animations
+ * - Panel transition animations
+ * - Reduced motion compliance
+ */
+
+/* Base interactive element styles */
+.terminal-interactive {
+  transition: box-shadow 0.15s ease, 
+              background-color 0.1s ease, 
+              transform 0.05s ease,
+              border-color 0.15s ease;
+}
+
+/* Hover glow effect for interactive elements - Requirements: 15.1 */
+.terminal-interactive:hover:not(:disabled) {
+  box-shadow: 0 0 8px var(--terminal-glow),
+              0 0 16px color-mix(in srgb, var(--terminal-glow) 50%, transparent);
+}
+
+.terminal-interactive:focus-visible:not(:disabled) {
+  box-shadow: 0 0 8px var(--terminal-glow),
+              0 0 16px color-mix(in srgb, var(--terminal-glow) 50%, transparent);
+  outline: 1px solid var(--terminal-accent);
+  outline-offset: 2px;
+}
+
+/* Subtle hover glow variant */
+.terminal-interactive-subtle:hover:not(:disabled) {
+  box-shadow: 0 0 4px var(--terminal-glow),
+              0 0 8px color-mix(in srgb, var(--terminal-glow) 30%, transparent);
+}
+
+/* Strong hover glow variant */
+.terminal-interactive-strong:hover:not(:disabled) {
+  box-shadow: 0 0 12px var(--terminal-glow),
+              0 0 24px color-mix(in srgb, var(--terminal-glow) 60%, transparent),
+              0 0 36px color-mix(in srgb, var(--terminal-glow) 30%, transparent);
+}
+
+/* Button press feedback - Requirements: 15.2 */
+.terminal-interactive:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: 0 0 4px var(--terminal-glow),
+              inset 0 0 4px color-mix(in srgb, var(--terminal-glow) 20%, transparent);
+}
+
+/* Panel transition animations - Requirements: 15.3 */
+.terminal-panel-enter {
+  animation: terminal-panel-enter 0.2s ease-out forwards;
+}
+
+.terminal-panel-exit {
+  animation: terminal-panel-exit 0.15s ease-in forwards;
+}
+
+@keyframes terminal-panel-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes terminal-panel-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Slide-in panel animations */
+.terminal-panel-slide-left {
+  animation: terminal-slide-left 0.2s ease-out forwards;
+}
+
+.terminal-panel-slide-right {
+  animation: terminal-slide-right 0.2s ease-out forwards;
+}
+
+.terminal-panel-slide-up {
+  animation: terminal-slide-up 0.2s ease-out forwards;
+}
+
+.terminal-panel-slide-down {
+  animation: terminal-slide-down 0.2s ease-out forwards;
+}
+
+@keyframes terminal-slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes terminal-slide-right {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes terminal-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes terminal-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Terminal fade animation */
+.terminal-fade-in {
+  animation: terminal-fade-in 0.2s ease-out forwards;
+}
+
+.terminal-fade-out {
+  animation: terminal-fade-out 0.15s ease-in forwards;
+}
+
+@keyframes terminal-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes terminal-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Terminal flicker effect for dramatic transitions */
+.terminal-flicker-in {
+  animation: terminal-flicker-in 0.3s ease-out forwards;
+}
+
+@keyframes terminal-flicker-in {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  40% {
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Glow pulse animation for active/selected states */
+.terminal-glow-pulse {
+  animation: terminal-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes terminal-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px var(--terminal-glow),
+                0 0 8px color-mix(in srgb, var(--terminal-glow) 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 8px var(--terminal-glow),
+                0 0 16px color-mix(in srgb, var(--terminal-glow) 50%, transparent);
+  }
+}
+
+/* Text glow pulse for important labels */
+.terminal-text-glow-pulse {
+  animation: terminal-text-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes terminal-text-glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 2px var(--terminal-glow),
+                 0 0 4px color-mix(in srgb, var(--terminal-glow) 30%, transparent);
+  }
+  50% {
+    text-shadow: 0 0 4px var(--terminal-glow),
+                 0 0 8px color-mix(in srgb, var(--terminal-glow) 50%, transparent);
+  }
+}
+
+/* Reduced motion: disable all animations - Requirements: 15.7 */
+@media (prefers-reduced-motion: reduce) {
+  .terminal-interactive,
+  .terminal-interactive-subtle,
+  .terminal-interactive-strong {
+    transition: none;
+  }
+  
+  .terminal-interactive:hover:not(:disabled),
+  .terminal-interactive-subtle:hover:not(:disabled),
+  .terminal-interactive-strong:hover:not(:disabled) {
+    box-shadow: none;
+  }
+  
+  .terminal-interactive:active:not(:disabled) {
+    transform: none;
+  }
+  
+  .terminal-panel-enter,
+  .terminal-panel-exit,
+  .terminal-panel-slide-left,
+  .terminal-panel-slide-right,
+  .terminal-panel-slide-up,
+  .terminal-panel-slide-down,
+  .terminal-fade-in,
+  .terminal-fade-out,
+  .terminal-flicker-in,
+  .terminal-glow-pulse,
+  .terminal-text-glow-pulse {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

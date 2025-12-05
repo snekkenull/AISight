@@ -1,0 +1,376 @@
+# Implementation Plan
+
+- [x] 1. Set up terminal theme system foundation
+  - [x] 1.1 Create terminal color scheme definitions and CSS variables
+    - Define TerminalColorScheme interface and predefined schemes (green, amber, white, blue, eva-orange, eva-red, eva-purple)
+    - Add CSS variables for terminal colors (--terminal-bg, --terminal-fg, --terminal-accent, --terminal-dim, --terminal-error, --terminal-success, --terminal-glow)
+    - Create terminal-theme.css with scheme-specific class selectors
+    - _Requirements: 10.1, 10.2, 10.3, 10.4_
+  - [x] 1.2 Create useTerminalTheme hook for theme management
+    - Implement theme state management with React context
+    - Add localStorage persistence for selected theme
+    - Implement theme switching function
+    - _Requirements: 10.5, 10.6_
+  - [ ]* 1.3 Write property test for theme persistence round-trip
+    - **Property 5: Theme Persistence Round-Trip**
+    - **Validates: Requirements 10.5, 10.6**
+  - [ ]* 1.4 Write property test for global theme application
+    - **Property 3: Global Theme Application**
+    - **Validates: Requirements 6.5, 8.5, 10.2, 11.3, 12.4, 16.3**
+
+- [x] 2. Create CRT effect system
+  - [x] 2.1 Create CRTEffect component with CSS-based effects
+    - Implement scan line overlay with configurable intensity
+    - Implement vignette effect with radial gradient
+    - Implement phosphor glow filter
+    - Add barrel distortion using CSS transform (perspective/rotateX)
+    - _Requirements: 1.1, 1.2, 1.5, 1.6_
+  - [x] 2.2 Add chromatic aberration effect
+    - Implement RGB color separation at screen edges using CSS filters or pseudo-elements
+    - Make aberration intensity configurable
+    - _Requirements: 1.3_
+  - [x] 2.3 Add phosphor glow effect to bright elements
+    - Implement text-shadow/box-shadow based glow
+    - Apply glow color from current terminal scheme
+    - _Requirements: 1.4_
+  - [x] 2.4 Add reduced motion support to CRT effects
+    - Detect prefers-reduced-motion media query
+    - Disable animated effects (flicker) when reduced motion enabled
+    - Maintain static visual styling
+    - _Requirements: 1.7_
+  - [ ]* 2.5 Write property test for scan line intensity configuration
+    - **Property 12: Scan Line Intensity Configuration**
+    - **Validates: Requirements 1.5**
+  - [ ]* 2.6 Write property test for reduced motion compliance
+    - **Property 1: Reduced Motion Compliance**
+    - **Validates: Requirements 1.7, 15.7**
+
+- [x] 3. Create terminal base components
+  - [x] 3.1 Create TerminalWindow component
+    - Implement bordered frame with ASCII-style box-drawing characters
+    - Add title bar with uppercase monospace text
+    - Ensure no rounded corners or gradient backgrounds
+    - Support single/double/ascii border styles
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
+  - [x] 3.2 Create TerminalButton component
+    - Implement bordered button with monospace text
+    - Add hover glow effect using current theme colors
+    - Add click feedback animation
+    - _Requirements: 3.5, 15.1, 15.2_
+  - [x] 3.3 Create TerminalInput component
+    - Implement command-line style input with blinking cursor
+    - Apply monospace font and terminal colors
+    - Add focus glow effect
+    - _Requirements: 13.5_
+  - [x] 3.4 Create terminal scrollbar styles
+    - Implement thin track styling with minimal visual weight
+    - Use solid color matching terminal scheme for thumb
+    - Ensure no rounded corners or gradients
+    - Add hover highlight feedback
+    - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5_
+  - [ ]* 3.5 Write property test for terminal window styling consistency
+    - **Property 2: Terminal Window Styling Consistency**
+    - **Validates: Requirements 4.3, 4.4, 4.5**
+
+- [x] 4. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [x] 5. Create terminal layout structure
+  - [x] 5.1 Create TerminalLayout component
+    - Implement CSS Grid layout with 5 zones (status bar, left block, main, right block, terminal dialog)
+    - Support AI position switching (bottom/right)
+    - Ensure map is central and largest element
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
+  - [x] 5.2 Create StatusBar component
+    - Implement fixed top bar spanning full width
+    - Add text-based navigation buttons for all dock functions
+    - Add system status indicators (connection, vessel count, time)
+    - Add theme switcher button
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
+  - [x] 5.3 Remove collapsible side dock
+    - Remove or hide CollapsibleSidebar component from main layout
+    - Migrate all dock functionality to StatusBar buttons
+    - _Requirements: 2.6_
+  - [x] 5.4 Add responsive layout handling
+    - Implement proportional sizing on viewport resize
+    - Ensure all zones remain visible at supported viewport sizes
+    - _Requirements: 2.7_
+  - [ ]* 5.5 Write property test for responsive layout proportions
+    - **Property 13: Responsive Layout Proportions**
+    - **Validates: Requirements 2.7**
+  - [ ]* 5.6 Write property test for layout position adjustment
+    - **Property 11: Layout Position Adjustment**
+    - **Validates: Requirements 13.3**
+
+- [x] 6. Create P5.js Earth globe visualization
+  - [x] 6.1 Set up P5.js integration
+    - Install p5.js and @types/p5
+    - Create useP5 hook for React integration
+    - Set up canvas container in left function block
+    - _Requirements: 5.1_
+  - [x] 6.2 Implement 3D globe rendering
+    - Create sphere with wireframe or low-poly aesthetic
+    - Apply terminal color scheme to globe
+    - Implement slow idle rotation animation
+    - _Requirements: 5.4, 5.5_
+  - [x] 6.3 Load and display GeoJSON country boundaries
+    - Load world countries GeoJSON data
+    - Project boundaries onto globe surface
+    - Style with terminal colors
+    - _Requirements: 5.2_
+  - [x] 6.4 Implement viewport highlighting
+    - Receive map viewport bounds as props
+    - Highlight current viewport region on globe
+    - Update highlight when viewport changes
+    - _Requirements: 5.3_
+  - [x] 6.5 Implement vessel selection state transition
+    - Hide globe when vessel is selected
+    - Show vessel info panel instead
+    - Restore globe when vessel is deselected
+    - _Requirements: 5.6_
+  - [ ]* 6.6 Write property test for viewport-globe synchronization
+    - **Property 7: Viewport-Globe Synchronization**
+    - **Validates: Requirements 5.3**
+  - [ ]* 6.7 Write property test for vessel selection state transitions
+    - **Property 8: Vessel Selection State Transitions**
+    - **Validates: Requirements 5.6, 6.3**
+
+- [x] 7. Create digital gauge display
+  - [x] 7.1 Create DigitalGauge component
+    - Implement seven-segment style numeric display
+    - Support configurable digit count
+    - Apply terminal color scheme
+    - _Requirements: 6.1, 6.2, 6.5_
+  - [x] 7.2 Add gauge value animation
+    - Implement rolling/flickering digit transition effect
+    - Animate from old value to new value
+    - _Requirements: 6.3_
+  - [x] 7.3 Add gauge labels
+    - Display uppercase monospace labels
+    - Apply terminal styling
+    - _Requirements: 6.4_
+  - [x] 7.4 Integrate gauges into left function block
+    - Display fleet status metrics as gauges
+    - Show when no vessel is selected
+    - _Requirements: 6.1_
+  - [ ]* 7.5 Write property test for data value animation
+    - **Property 16: Data Value Animation**
+    - **Validates: Requirements 15.4**
+
+- [x] 8. Create track chart visualization
+  - [x] 8.1 Create TrackChart component
+    - Implement line graph for vessel position history
+    - Display in right function block when vessel selected
+    - _Requirements: 7.1, 7.2_
+  - [x] 8.2 Add chart axis labels and grid
+    - Display coordinate or time information on axes
+    - Add grid lines with terminal styling
+    - Use monospace labels
+    - _Requirements: 7.3, 7.4_
+  - [x] 8.3 Add placeholder state
+    - Display idle message when no vessel selected
+    - _Requirements: 7.5_
+
+- [x] 9. Create radar scan visualization
+  - [x] 9.1 Create RadarScan component
+    - Implement circular radar display
+    - Display in right function block when vessel selected
+    - _Requirements: 8.1_
+  - [x] 9.2 Implement radar sweep animation
+    - Create rotating sweep line with afterglow trail
+    - Apply terminal color scheme with phosphor glow
+    - _Requirements: 8.2, 8.5, 15.5_
+  - [x] 9.3 Display nearby vessels as blips
+    - Calculate relative bearing and distance from selected vessel
+    - Position blips proportionally on radar
+    - _Requirements: 8.3_
+  - [x] 9.4 Add range rings with labels
+    - Display concentric range rings
+    - Add distance labels
+    - _Requirements: 8.4_
+  - [x] 9.5 Add idle state
+    - Display scanning animation or placeholder when no vessel selected
+    - _Requirements: 8.6_
+  - [ ]* 9.6 Write property test for radar blip accuracy
+    - **Property 9: Radar Blip Accuracy**
+    - **Validates: Requirements 8.3**
+
+- [x] 10. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [x] 11. Redesign vessel information panel
+  - [x] 11.1 Create terminal-styled vessel info component
+    - Apply TerminalWindow styling
+    - Use monospace typography throughout
+    - _Requirements: 9.5_
+  - [x] 11.2 Remove all emoji and unicode pictographics
+    - Replace emoji with text labels or ASCII symbols
+    - Ensure only ASCII-compatible characters (0-127)
+    - _Requirements: 9.2, 9.3_
+  - [x] 11.3 Format data fields with bracketed label-value pairs
+    - Use format like [LABEL]: value
+    - Apply consistent spacing and alignment
+    - _Requirements: 9.4_
+  - [x] 11.4 Update vessel type indicators
+    - Use text abbreviations (e.g., CARGO, TANK, PASS)
+    - Or use pixelated icons
+    - _Requirements: 9.6_
+  - [x] 11.5 Integrate into left function block
+    - Display when vessel is selected
+    - Replace globe/gauges view
+    - _Requirements: 9.1_
+  - [ ]* 11.6 Write property test for ASCII-only vessel information
+    - **Property 4: ASCII-Only Vessel Information**
+    - **Validates: Requirements 9.2, 9.3**
+
+- [x] 12. Create pixelated icon system
+  - [x] 12.1 Create PixelIcon component
+    - Apply image-rendering: pixelated CSS
+    - Support size and color props
+    - Use consistent pixel grid size
+    - _Requirements: 12.1, 12.2, 12.3, 12.5_
+  - [x] 12.2 Create pixel art icon sprites
+    - Design icons for navigation, vessel types, status indicators
+    - Use consistent pixel grid (e.g., 16x16 or 32x32)
+    - _Requirements: 12.1_
+  - [x] 12.3 Apply terminal color scheme to icons
+    - Use currentColor or theme variables for icon colors
+    - _Requirements: 12.4_
+  - [ ]* 12.4 Write property test for pixelated icon rendering
+    - **Property 14: Pixelated Icon Rendering**
+    - **Validates: Requirements 12.2, 12.3**
+
+- [x] 13. Create terminal AI dialog interface
+  - [x] 13.1 Create TerminalAIDialog component
+    - Implement as TerminalWindow at bottom of screen
+    - Support position switching to right side
+    - _Requirements: 13.1, 13.2_
+  - [x] 13.2 Implement command-prompt message styling
+    - Prefix user messages with "> "
+    - Prefix AI messages with "< "
+    - Use monospace typography
+    - _Requirements: 13.4_
+  - [x] 13.3 Create command-line input with blinking cursor
+    - Implement cursor blink animation
+    - Apply terminal input styling
+    - _Requirements: 13.5_
+  - [x] 13.4 Add terminal-style loading indicator
+    - Display when AI is processing
+    - Use spinning characters or progress dots
+    - _Requirements: 13.7_
+  - [x] 13.5 Remove floating button overlay
+    - Remove AIChatOverlay floating button design
+    - Integrate AI dialog into main layout
+    - _Requirements: 13.6_
+  - [x] 13.6 Implement layout adjustment on position change
+    - Adjust main layout zones when AI moves bottom/right
+    - Ensure no content overlap
+    - _Requirements: 13.3_
+  - [ ]* 13.7 Write property test for AI message formatting
+    - **Property 10: AI Message Formatting**
+    - **Validates: Requirements 13.4**
+
+- [x] 14. Create sound effects system
+  - [x] 14.1 Create SoundService
+    - Implement audio playback for terminal effects
+    - Support preloading sound files
+    - Implement volume control
+    - _Requirements: 14.6_
+  - [x] 14.2 Add sound effect files
+    - Add click.mp3, keystroke.mp3, alert.mp3, blip.mp3, radar-ping.mp3
+    - Ensure short, subtle terminal-style sounds
+    - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5_
+  - [x] 14.3 Create useSoundEffects hook
+    - Integrate SoundService with React
+    - Provide play functions for each effect type
+    - _Requirements: 14.1, 14.2_
+  - [x] 14.4 Implement sound preference management
+    - Store enabled/disabled state in localStorage
+    - Respect user preference on all interactions
+    - _Requirements: 14.6, 14.7_
+  - [x] 14.5 Integrate sounds into components
+    - Add click sounds to buttons
+    - Add keystroke sounds to inputs
+    - Add radar ping to radar sweep
+    - Add alert sounds to errors
+    - _Requirements: 14.1, 14.2, 14.3, 14.5_
+  - [ ]* 14.6 Write property test for sound preference respect
+    - **Property 6: Sound Preference Respect**
+    - **Validates: Requirements 14.6, 14.7**
+  - [ ]* 14.7 Write property test for sound playback on interaction
+    - **Property 15: Sound Playback on Interaction**
+    - **Validates: Requirements 14.1, 14.2**
+
+- [x] 15. Add interactive animations
+  - [x] 15.1 Add hover glow animations to interactive elements
+    - Apply glow effect on hover using theme colors
+    - _Requirements: 15.1_
+  - [x] 15.2 Add button press feedback animations
+    - Implement press/click animation
+    - _Requirements: 15.2_
+  - [x] 15.3 Add panel transition animations
+    - Animate panel open/close with terminal-style effects
+    - _Requirements: 15.3_
+  - [x] 15.4 Add globe rotation animation
+    - Implement smooth continuous rotation when idle
+    - _Requirements: 15.6_
+  - [x] 15.5 Ensure reduced motion compliance for all animations
+    - Check prefers-reduced-motion for each animation
+    - Disable or minimize animations when preference set
+    - _Requirements: 15.7_
+
+- [x] 16. Update coverage display with EVA styling
+  - [x] 16.1 Apply terminal window styling to coverage panels
+    - Use TerminalWindow component
+    - _Requirements: 16.1_
+  - [x] 16.2 Update coverage data formatting
+    - Use monospace typography
+    - Apply bracketed labels
+    - _Requirements: 16.2_
+  - [x] 16.3 Apply terminal color scheme to coverage indicators
+    - Use current theme colors
+    - _Requirements: 16.3_
+  - [x] 16.4 Add grid overlay to coverage visualizations
+    - Apply terminal styling to any maps or charts
+    - _Requirements: 16.4_
+
+- [x] 17. Integrate all components into main App
+  - [x] 17.1 Replace main layout with TerminalLayout
+    - Remove old layout structure
+    - Integrate CRTEffect overlay
+    - Wire up all function blocks
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
+  - [x] 17.2 Wire up theme context
+    - Wrap app with theme provider
+    - Connect theme switcher in status bar
+    - _Requirements: 10.1, 10.2_
+  - [x] 17.3 Wire up sound service
+    - Initialize sound service
+    - Connect to user preferences
+    - _Requirements: 14.6_
+  - [x] 17.4 Connect visualizations to data
+    - Wire globe to map viewport
+    - Wire radar and track chart to selected vessel
+    - Wire gauges to fleet statistics
+    - _Requirements: 5.3, 6.1, 7.1, 8.1_
+
+- [x] 18. Final polish and accessibility verification
+  - [x] 18.1 Verify color contrast across all themes
+    - Check text/background combinations meet WCAG AA
+    - Adjust colors if needed
+    - _Requirements: 10.2_
+  - [x] 18.2 Verify keyboard navigation
+    - Test all interactive elements are keyboard accessible
+    - Ensure focus indicators are visible
+    - _Requirements: 3.4_
+  - [x] 18.3 Test reduced motion mode
+    - Verify all animations respect prefers-reduced-motion
+    - Ensure functionality works without animations
+    - _Requirements: 1.7, 15.7_
+  - [x] 18.4 Test sound mute functionality
+    - Verify no sounds play when disabled
+    - _Requirements: 14.7_
+
+- [x] 19. Final Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+

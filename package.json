@@ -1,0 +1,35 @@
+{
+  "name": "aisight",
+  "version": "1.0.0",
+  "description": "AISight - Real-time vessel tracking application",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build:all": "npm run build:backend && npm run build:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "test:all": "npm run test:backend && npm run test:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:all": "npm run lint:backend && npm run lint:frontend",
+    "format:backend": "cd backend && npm run format",
+    "format:frontend": "cd frontend && npm run format",
+    "format:all": "npm run format:backend && npm run format:frontend",
+    "cleanup:components": "node scripts/cleanup-unused-components.js",
+    "cleanup:components:delete": "node scripts/cleanup-unused-components.js --delete",
+    "cleanup:components:verbose": "node scripts/cleanup-unused-components.js --verbose"
+  },
+  "keywords": ["ais", "vessel-tracking", "maritime", "real-time"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {}
+}

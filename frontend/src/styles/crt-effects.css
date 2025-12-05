@@ -1,0 +1,198 @@
+/**
+ * CRT Effects CSS
+ * 
+ * Provides CSS-based CRT monitor simulation effects including:
+ * - Phosphor glow for bright elements
+ * - Text shadow effects using terminal color scheme
+ * - Box glow effects for containers
+ * 
+ * Requirements: 1.4 (phosphor glow effect)
+ */
+
+/* ============================================
+   Phosphor Glow Effects - Requirements: 1.4
+   ============================================ */
+
+/* Text phosphor glow - applies to bright text elements */
+.crt-phosphor-text,
+.terminal-glow,
+[data-phosphor-glow="true"] {
+  text-shadow: 
+    0 0 2px var(--terminal-glow, #ff6600),
+    0 0 4px var(--terminal-glow, #ff6600),
+    0 0 8px var(--terminal-glow, #ff6600),
+    0 0 12px color-mix(in srgb, var(--terminal-glow, #ff6600) 50%, transparent);
+}
+
+/* Subtle text glow - for less prominent elements */
+.crt-phosphor-text-subtle,
+.terminal-glow-subtle {
+  text-shadow: 
+    0 0 2px var(--terminal-glow, #ff6600),
+    0 0 4px color-mix(in srgb, var(--terminal-glow, #ff6600) 60%, transparent);
+}
+
+/* Box/container phosphor glow */
+.crt-phosphor-box,
+.terminal-box-glow,
+[data-box-glow="true"] {
+  box-shadow: 
+    0 0 4px var(--terminal-glow, #ff6600),
+    0 0 8px var(--terminal-glow, #ff6600),
+    0 0 12px color-mix(in srgb, var(--terminal-glow, #ff6600) 40%, transparent),
+    inset 0 0 4px color-mix(in srgb, var(--terminal-glow, #ff6600) 20%, transparent);
+}
+
+/* Subtle box glow */
+.crt-phosphor-box-subtle,
+.terminal-box-glow-subtle {
+  box-shadow: 
+    0 0 3px var(--terminal-glow, #ff6600),
+    0 0 6px color-mix(in srgb, var(--terminal-glow, #ff6600) 50%, transparent);
+}
+
+/* Border glow effect */
+.crt-phosphor-border {
+  border-color: var(--terminal-glow, #ff6600);
+  box-shadow: 
+    0 0 2px var(--terminal-glow, #ff6600),
+    inset 0 0 2px color-mix(in srgb, var(--terminal-glow, #ff6600) 30%, transparent);
+}
+
+/* ============================================
+   Interactive Element Glow States
+   ============================================ */
+
+/* Hover glow enhancement */
+.crt-glow-hover:hover {
+  text-shadow: 
+    0 0 4px var(--terminal-glow, #ff6600),
+    0 0 8px var(--terminal-glow, #ff6600),
+    0 0 16px var(--terminal-glow, #ff6600);
+}
+
+/* Focus glow for accessibility */
+.crt-glow-focus:focus,
+.crt-glow-focus:focus-visible {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--terminal-bg, #0a0a0a),
+    0 0 0 4px var(--terminal-glow, #ff6600),
+    0 0 8px var(--terminal-glow, #ff6600);
+}
+
+/* Active/pressed state glow */
+.crt-glow-active:active {
+  text-shadow: 
+    0 0 2px var(--terminal-glow, #ff6600),
+    0 0 4px var(--terminal-glow, #ff6600);
+  filter: brightness(1.2);
+}
+
+/* ============================================
+   Scan Line Patterns
+   ============================================ */
+
+/* Fine scan lines */
+.crt-scanlines-fine {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.03) 0px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 3px
+  );
+  background-size: 100% 3px;
+}
+
+/* Coarse scan lines */
+.crt-scanlines-coarse {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0px,
+    transparent 1px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+  background-size: 100% 4px;
+}
+
+/* ============================================
+   Vignette Patterns
+   ============================================ */
+
+.crt-vignette-light {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 60%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+.crt-vignette-medium {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.3) 80%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.crt-vignette-heavy {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 30%,
+    rgba(0, 0, 0, 0.4) 70%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+/* ============================================
+   CRT Container Utilities
+   ============================================ */
+
+/* Base CRT container styling */
+.crt-container {
+  position: relative;
+  background-color: var(--terminal-bg, #0a0a0a);
+  color: var(--terminal-fg, #ff6600);
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+/* CRT screen bezel effect */
+.crt-bezel {
+  border: 4px solid #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 
+    inset 0 0 20px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* ============================================
+   Reduced Motion Support - Requirements: 1.7
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable animated glow effects */
+  .crt-phosphor-text,
+  .crt-phosphor-box,
+  .terminal-glow,
+  .terminal-box-glow {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Simplify glow to static effect */
+  .crt-phosphor-text,
+  .terminal-glow {
+    text-shadow: 0 0 2px var(--terminal-glow, #ff6600);
+  }
+  
+  .crt-phosphor-box,
+  .terminal-box-glow {
+    box-shadow: 0 0 4px var(--terminal-glow, #ff6600);
+  }
+}
