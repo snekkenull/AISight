@@ -168,6 +168,10 @@ export class VesselRepository {
           skippedMissingVessel: skipped,
           total: positions.length,
         });
+
+        // Manually update vessel_latest_positions table
+        // (needed when database doesn't support triggers)
+        await this.updateLatestPositions(validPositions);
       }
     } catch (error) {
       console.error('Raw database error:', error);
@@ -181,6 +185,69 @@ export class VesselRepository {
       });
       this.logger.logDatabaseError(dbError, 'batchInsertPositions');
       throw dbError;
+    }
+  }
+
+  /**
+   * Update vessel_latest_positions table with new positions
+   * This is needed when the database doesn't support triggers
+   */
+  private async updateLatestPositions(positions: PositionReport[]): Promise<void> {
+    if (positions.length === 0) return;
+
+    // Group positions by MMSI and keep only the latest for each vessel
+    const latestByMMSI = new Map<string, PositionReport>();
+    for (const pos of positions) {
+      const existing = latestByMMSI.get(pos.mmsi);
+      if (!existing || new Date(pos.timestamp) > new Date(existing.timestamp)) {
+        latestByMMSI.set(pos.mmsi, pos);
+      }
+    }
+
+    const latestPositions = Array.from(latestByMMSI.values());
+    
+    // Build batch upsert query
+    const values: any[] = [];
+    const placeholders: string[] = [];
+
+    latestPositions.forEach((pos, index) => {
+      const offset = index * 8;
+      placeholders.push(
+        `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5}, $${offset + 6}, $${offset + 7}, $${offset + 8})`
+      );
+      values.push(
+        pos.mmsi,
+        pos.timestamp,
+        pos.latitude,
+        pos.longitude,
+        pos.sog ?? null,
+        pos.cog ?? null,
+        pos.true_heading ?? null,
+        pos.navigational_status ?? null
+      );
+    });
+
+    const query = `
+      INSERT INTO vessel_latest_positions (
+        mmsi, timestamp, latitude, longitude, sog, cog, true_heading, navigational_status
+      )
+      VALUES ${placeholders.join(', ')}
+      ON CONFLICT (mmsi) DO UPDATE SET
+        timestamp = EXCLUDED.timestamp,
+        latitude = EXCLUDED.latitude,
+        longitude = EXCLUDED.longitude,
+        sog = EXCLUDED.sog,
+        cog = EXCLUDED.cog,
+        true_heading = EXCLUDED.true_heading,
+        navigational_status = EXCLUDED.navigational_status
+      WHERE EXCLUDED.timestamp > vessel_latest_positions.timestamp;
+    `;
+
+    try {
+      await this.pool.query(query, values);
+    } catch (error) {
+      // Log but don't throw - this is a best-effort optimization
+      this.logger.error('Failed to update latest positions', error instanceof Error ? error : new Error(String(error)));
     }
   }
 
