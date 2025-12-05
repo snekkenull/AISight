@@ -250,9 +250,9 @@ class Server {
     }
 
     try {
-      const result = await this.pool.query('SELECT NOW()');
+      const result = await this.pool.query('SELECT CURRENT_TIMESTAMP');
       logger.debug('Database connection test successful', {
-        timestamp: result.rows[0].now,
+        timestamp: result.rows[0].current_timestamp,
       });
     } catch (error) {
       logger.logDatabaseError(

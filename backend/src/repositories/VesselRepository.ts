@@ -38,7 +38,7 @@ export class VesselRepository {
         draught = COALESCE(EXCLUDED.draught, vessels.draught),
         destination = COALESCE(EXCLUDED.destination, vessels.destination),
         eta = COALESCE(EXCLUDED.eta, vessels.eta),
-        updated_at = NOW()
+        updated_at = CURRENT_TIMESTAMP
       RETURNING *;
     `;
 
@@ -287,7 +287,7 @@ export class VesselRepository {
     }
 
     if (criteria.maxPositionAgeHours !== undefined) {
-      conditions.push(`lp.timestamp > NOW() - INTERVAL '1 hour' * $${paramIndex++}`);
+      conditions.push(`lp.timestamp > CURRENT_TIMESTAMP - INTERVAL '1 hour' * $${paramIndex++}`);
       values.push(criteria.maxPositionAgeHours);
     }
 
@@ -528,7 +528,7 @@ export class VesselRepository {
   }
 
   async countVesselsWithRecentPosition(thresholdHours: number): Promise<number> {
-    const query = `SELECT COUNT(DISTINCT mmsi) as count FROM position_reports WHERE timestamp > NOW() - INTERVAL '1 hour' * $1;`;
+    const query = `SELECT COUNT(DISTINCT mmsi) as count FROM position_reports WHERE timestamp > CURRENT_TIMESTAMP - INTERVAL '1 hour' * $1;`;
     try {
       const result = await this.pool.query(query, [thresholdHours]);
       return parseInt(result.rows[0].count, 10);
